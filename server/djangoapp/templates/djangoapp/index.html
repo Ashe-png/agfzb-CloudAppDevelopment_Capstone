@@ -30,9 +30,25 @@
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a>
-              </li>
+            </li>
+            </ul>
+
+            {% if user.is_authenticated %}
+              <div class="ml-auto">
+                <span class="mr-2">{{ user.first_name }}({{ user.username }})</span>
+                <a href="{% url 'djangoapp:logout' %}">Log out</a>
+              </div>
+              {% else %}
+              <form class="form-inline ml-auto" action="{% url 'djangoapp:login' %}" method="post">
+                {% csrf_token %}
+                <input class="form-control mr-sm-2" type="text" placeholder="Username" name="username" required>
+                <input class="form-control mr-sm-2" type="password" placeholder="Password" name="psw" required>
+                <button class="btn btn-primary my-2 my-sm-0 mr-2" type="submit">Login</button>
+                <a class="btn btn-outline-primary my-2 my-sm-0"  href="{% url 'djangoapp:registration' %}">Sign Up</a>
+              </form>
+            {% endif %}
             
-          </ul>
+          
         </div>
       </nav>
 
